@@ -1,0 +1,30 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+neurogate
+neurogate-server
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (if you use vendor)
+vendor/
+
+# IDE specific files (Optional but recommended)
+.idea/
+.vscode/
+.DS_Store
+
+# --- SECURITY ---
+# 忽略真实的配置文件，防止密钥泄露
+configs/config.yaml
+.env
+
+# 保留配置文件的模板
+!configs/config.example.yaml

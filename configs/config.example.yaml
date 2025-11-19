@@ -1,0 +1,11 @@
+server:
+  port: 80080
+  mode: debug
+
+app:
+  name: "neurogate"
+  version: "v0.1.0"
+
+openai:
+  api_key: ""
+  base_url: "http://api.openai.com/v1"
