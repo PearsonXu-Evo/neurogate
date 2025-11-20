@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"neurogate/internal/api"
 	"neurogate/internal/config"
+	"neurogate/internal/infra/mock"
 	"neurogate/pkg/logger"
 	"os"
 	"os/signal"
@@ -25,7 +26,9 @@ func main() {
 		zap.String("env", cfg.Server.Mode),
 	)
 
-	r := api.NewRouter(cfg)
+	llmClient := mock.NewMockClient()
+
+	r := api.NewRouter(cfg, llmClient)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", cfg.Server.Port),
@@ -40,7 +43,8 @@ func main() {
 	logger.Log.Info("Server started", zap.Int("port", cfg.Server.Port))
 
 	quit := make(chan os.Signal, 1)
-
+	// 注册监听，但系统向程序发送信号好，截取并进行后续操作
+	// 阻塞监听是否有SIGINT或者SIGTERM系统信号传来
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 	logger.Log.Info("Shutting down server...")
